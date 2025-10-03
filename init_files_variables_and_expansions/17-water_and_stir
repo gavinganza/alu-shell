@@ -1,2 +1,2 @@
 #!/bin/bash
-printf "%o" $(awk 'function b(t,_,d,i,l,r){l=length(t);for(i=1;i<=l;i++){d=substr(t,i,1);r=r*5+d}return r}BEGIN{print b(ARGV[1])+b(ARGV[2])}' $(echo $WATER | tr 'water' '01234') $(echo $STIR | tr 'stir.' '01234')) | tr '01234567' 'bestchol'
+dc <<< "5 i $(echo $WATER | tr 'water' '01234') $(echo $STIR | tr 'stir.' '01234') + 8 o p" | tr '01234567' 'bestchol'
