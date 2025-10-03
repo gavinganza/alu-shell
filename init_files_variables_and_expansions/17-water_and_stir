@@ -1,0 +1,2 @@
+#!/bin/bash
+dc -e "${#water}i $(echo "$WATER" | tr "$water" "$(echo "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" | cut -c 1-${#water})") ${#stir}i $(echo "$STIR" | tr -d '.' | tr "$stir" "$(echo "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" | cut -c 1-${#stir})") + ${#bestchol}o p" | tr "$(echo "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" | cut -c 1-${#bestchol})" "$bestchol"
