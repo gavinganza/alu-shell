@@ -1,2 +1,2 @@
 #!/bin/bash
-dc -e "${#water}i $(echo "$WATER" | tr "$water" "$(echo "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" | cut -c 1-${#water})") ${#stir}i $(echo "$STIR" | tr -d '.' | tr "$stir" "$(echo "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" | cut -c 1-${#stir})") + ${#bestchol}o p" | tr "$(echo "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" | cut -c 1-${#bestchol})" "$bestchol"
+printf "%o" $(awk 'function b(t,_,d,i,l,r){l=length(t);for(i=1;i<=l;i++){d=substr(t,i,1);r=r*5+d}return r}BEGIN{print b(ARGV[1])+b(ARGV[2])}' $(echo $WATER | tr 'water' '01234') $(echo $STIR | tr 'stir.' '01234')) | tr '01234567' 'bestchol'
