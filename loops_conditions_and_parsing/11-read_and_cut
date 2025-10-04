@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# This script reads the /etc/passwd file line by line and displays the username,
+# user ID, and home directory path.
+
+# Set the Internal Field Separator (IFS) to a colon (:)
+# This tells the read command to split the input line at every colon.
+IFS=:
+
+# Read the file line by line, assigning the delimited fields to variables.
+# The remaining fields (like password, GECOS) are included but unused.
+while read -r username password uid gid gecos home shell; do
+    # Display the three required fields separated by colons.
+    echo "${username}:${uid}:${home}"
+done < /etc/passwd
