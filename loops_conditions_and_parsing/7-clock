@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#2 while loops to show time
+hour=0
+while [ "$hour" -le 12 ]; do
+echo "Hour :$hour"
+min=1
+while [ "$min" -le 60 ]; do
+echo "Minute :$min"
+min=$((min+1))
+done
+hour=$((hour+1))
+done
