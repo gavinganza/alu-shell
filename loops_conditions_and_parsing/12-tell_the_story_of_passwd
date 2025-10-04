@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# This script reads the /etc/passwd file and constructs a story using all seven fields.
+
+# Set the Internal Field Separator (IFS) to a colon (:)
+# This is crucial for splitting each line of the /etc/passwd file correctly.
+IFS=:
+
+# Read the file line by line, assigning all seven fields to descriptive variables.
+while read -r username password uid gid gecos home shell; do
+    # Display the story using all seven variables in the exact required format.
+    echo "The user ${username} is part of the ${gid} gang, lives in ${home} and rides ${shell}. ${uid}'s place is protected by the passcode ${password}, more info about the user here: ${gecos}"
+done < /etc/passwd
