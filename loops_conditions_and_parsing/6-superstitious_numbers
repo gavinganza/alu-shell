@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#while loop with case
+count=1
+while [ "$count" -le 20 ]; do
+case "$count" in
+4)
+echo "$count"
+echo "bad luck from china"
+;;
+9)
+echo "$count"
+echo "bad luck from japan"
+;;
+17)
+echo "$count"
+echo "bad luck from italy"
+;;
+*)
+echo "$count"
+esac
+count=$((count+1))
+done
