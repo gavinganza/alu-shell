@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#printing the files starting from -
+for file in *; do
+echo "${file#*-}"
+done
