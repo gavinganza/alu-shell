@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Displays lines containing the 'bash' word in the process list.
+# shellcheck disable=SC2009
+
+# We use the full process listing command from the previous task (ps -auxf is preferred for hierarchy)
+# and pipe its output to grep to filter for the string 'bash'.
+ps -auxf | grep bash
