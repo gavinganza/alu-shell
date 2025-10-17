@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Stops the running '4-to_infinity_and_beyond' process without using kill or killall.
+
+# pkill finds processes by name and sends a signal (SIGTERM by default).
+# We search for the exact filename to ensure only the target process is stopped.
+pkill -f "./4-to_infinity_and_beyond"
+
+# The '-f' flag tells pkill to match against the full command line,
+# ensuring we accurately target the running script.
