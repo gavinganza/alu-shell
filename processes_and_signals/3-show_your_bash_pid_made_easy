@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Displays the PID and process name for processes whose name contains 'bash'.
+
+# Constraint: Cannot use 'ps'.
+# Solution: Use /proc filesystem and grep.
+
+# Find all directories in /proc that are named with digits (these are PIDs).
+# Then, execute a command on each one.
+find /proc -maxdepth 1 -type d -regextype posix-egrep -regex '^/proc/[0-9]+$' -print 2>/dev/null |
+while read -r PID_DIR; do
+    # Extract the PID number
+    PID=$(basename "$PID_DIR")
+
+    # Read the command name from the 'comm' file (process name, max 16 chars)
+    # The 'comm' file is cleaner than 'cmdline' for simple names.
+    # 2>/dev/null suppresses errors if the process dies between find and read.
+    PROCESS_NAME=$(cat "$PID_DIR/comm" 2>/dev/null)
+
+    # Check if the process name contains "bash" (case-sensitive)
+    if echo "$PROCESS_NAME" | grep -q "bash"; then
+        # Print the PID and the process name in the required format
+        echo "$PID $PROCESS_NAME"
+    fi
+done
