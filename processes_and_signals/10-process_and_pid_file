@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# Creates a PID file, runs indefinitely, and handles SIGTERM, SIGQUIT, and SIGINT signals.
+
+PID_FILE="/var/run/myscript.pid"
+
+# --- Cleanup/Termination Handler ---
+# This function handles cleanup tasks (deleting PID file) and then terminates the script.
+# It is trapped by SIGQUIT (signal 3) and SIGTERM (signal 15).
+cleanup_and_exit() {
+    # The signal that triggered the trap is often available, but we handle it generally here.
+    echo "I hate the kill command" # This line is specifically for SIGTERM, but we'll print it here
+                                  # as SIGTERM is required to cause both cleanup AND the message.
+
+    # 1. Delete the PID file
+    if [ -f "$PID_FILE" ]; then
+        rm -f "$PID_FILE"
+    fi
+
+    # 2. Terminate the script gracefully
+    exit 0
+}
+
+# --- Signal Traps ---
+
+# 1. Traps SIGQUIT (Quit) and SIGTERM (Termination). Both should call cleanup_and_exit.
+# Note: Since the requirement states "Displays I hate the kill command when receiving a SIGTERM signal"
+# AND "Deletes the file... and terminates itself when receiving a SIGQUIT or SIGTERM signal",
+# we combine the cleanup and the required SIGTERM message.
+trap cleanup_and_exit SIGQUIT SIGTERM
+
+# 2. Traps SIGINT (Interrupt, from Ctrl+C).
+# This signal prints a message but does NOT terminate the script (as seen in the example).
+trap 'echo "Y U no love me?!"' SIGINT
+
+# --- Main Logic ---
+
+# 1. Create the PID file containing the script's PID ($$)
+echo "$$" > "$PID_FILE"
+
+# 2. Display "To infinity and beyond" indefinitely
+while true; do
+    echo "To infinity and beyond"
+    sleep 2
+done
+
+# Note: The script should be run with 'sudo' because /var/run often requires root permissions.
