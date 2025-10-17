@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Stops the running '7-highlander' process without using kill or killall.
+
+# pkill finds processes by name and sends a signal (SIGTERM by default).
+# We search for the exact filename to ensure only the target process is signaled.
+pkill -f "./7-highlander"
+
+# The '-f' flag tells pkill to match against the full command line.
+# Running this script sends SIGTERM, which 7-highlander catches and responds to.

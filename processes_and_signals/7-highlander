@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Displays "To infinity and beyond" and responds to SIGTERM with "I am invincible!!!".
+
+# --- Signal Handler ---
+# The 'trap' command catches SIGTERM (signal 15) and executes the function 'invincible'.
+# We must use signal 15 (SIGTERM) or the signal name TERM.
+invincible() {
+    echo "I am invincible!!!"
+    # The script continues running after the trap function executes
+}
+
+trap invincible SIGTERM
+
+# --- Main Loop ---
+# Displays the phrase and sleeps indefinitely.
+while true; do
+    echo "To infinity and beyond"
+    sleep 2
+done
