@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-# Lists all running processes for all users, displaying the hierarchy.
+# Lists all running processes for all users in a user-oriented format, showing the hierarchy.
 
-# The command 'ps -efH' meets all requirements:
-# -e: Selects all processes.
-# -f: Displays a user-oriented, full-format listing.
-# -H: Displays the process hierarchy (the tree structure).
-ps -efH
+# Command explanation:
+# a: Show processes for all users.
+# u: Display in user-oriented format (USER, %CPU, %MEM, etc.).
+# x: Include processes without a controlling terminal (TTY).
+# f: Show process hierarchy (tree structure).
+ps -auxf
