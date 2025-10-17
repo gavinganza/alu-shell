@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 # Lists all running processes for all users in a user-oriented format, showing the hierarchy.
 
-# Command explanation:
-# a: Show processes for all users.
-# u: Display in user-oriented format (USER, %CPU, %MEM, etc.).
-# x: Include processes without a controlling terminal (TTY).
-# f: Show process hierarchy (tree structure).
-ps -auxf
+# This combines the full format (-f) and hierarchy (-H) commands.
+ps -efH
