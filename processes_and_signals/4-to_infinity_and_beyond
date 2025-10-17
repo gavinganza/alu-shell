@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Displays "To infinity and beyond" indefinitely with a 2-second sleep between iterations.
+
+# Use a 'while true' loop to run indefinitely until manually stopped (e.g., Ctrl+C).
+while true; do
+    echo "To infinity and beyond"
+    sleep 2
+done
