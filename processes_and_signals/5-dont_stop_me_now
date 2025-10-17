@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Finds and stops the running '4-to_infinity_and_beyond' process using the kill command.
+
+# Find the PID of the target script.
+# 1. ps -A: Lists all processes in a standard format (often shows PID as the first column).
+# 2. grep 4-to_infinity_and_beyond: Filters for the target script name.
+# 3. grep -v grep: Excludes the 'grep' process itself from the results.
+# 4. awk '{print $1}': Extracts the first field, which is the PID.
+TARGET_PID=$(ps -A | grep '4-to_infinity_and_beyond' | grep -v grep | awk '{print $1}')
+
+# Check if a PID was found before attempting to kill.
+if [ -z "$TARGET_PID" ]; then
+    echo "Error: Target process '4-to_infinity_and_beyond' not found."
+    exit 1
+fi
+
+# Use the kill command to terminate the found process.
+# Signal 15 (SIGTERM) is the default and is a graceful way to terminate the process.
+kill "$TARGET_PID"
+
+# We don't need to output anything, as the effect is seen in the other terminal.
