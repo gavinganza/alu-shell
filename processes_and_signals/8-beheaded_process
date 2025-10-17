@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Kills the running '7-highlander' process using the SIGKILL signal.
+
+# The 7-highlander script traps SIGTERM (signal 15).
+# To force termination, we must use SIGKILL (signal 9), which cannot be trapped.
+
+# pkill -9 finds the process by name and sends signal 9 (SIGKILL).
+pkill -9 -f "./7-highlander"
+
+# -f: Match against the full command line.
+# -9: Specify the SIGKILL signal.
