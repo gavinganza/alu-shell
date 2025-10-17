@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Daemon script that writes "I am alive!" to /tmp/my_process indefinitely.
+
+LOG_FILE="/tmp/my_process"
+
+# Infinite loop
+while true; do
+    echo "I am alive!" >> "$LOG_FILE"
+    sleep 2
+done

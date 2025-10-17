@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+# Bash init script to manage the 'manage_my_process' daemon.
+
+# Variables
+DAEMON_NAME="manage_my_process"
+PID_FILE="/var/run/my_process.pid"
+DAEMON_PATH="./$DAEMON_NAME" # Assumes the daemon is in the same directory
+
+# Function to stop the process
+stop_daemon() {
+    # Check if the PID file exists
+    if [ -f "$PID_FILE" ]; then
+        # Read the PID from the file
+        TARGET_PID=$(cat "$PID_FILE")
+
+        # Use pkill or kill to stop the process. We'll use pkill for robustness.
+        # Check if the PID is actually running the correct daemon before killing (optional but safer)
+        if ps -p "$TARGET_PID" -o comm= | grep -q "$DAEMON_NAME"; then
+            pkill -9 -P "$TARGET_PID" 2>/dev/null # Kills child processes if any
+            kill "$TARGET_PID" 2>/dev/null
+        fi
+
+        # Delete the PID file
+        rm -f "$PID_FILE"
+        echo "$DAEMON_NAME stopped"
+        return 0
+    fi
+    # If the PID file doesn't exist, we assume it's already stopped.
+    return 1
+}
+
+# Function to start the process
+start_daemon() {
+    # Run the daemon in the background (&) and detach it from the shell (nohup or just background)
+    # Using 'nohup' is best practice for daemons, but we'll use simple background execution.
+    # Redirecting stdout and stderr to /dev/null to fully detach the daemon.
+    # Note: The daemon logs to /tmp/my_process, so we only need to suppress shell output.
+    "$DAEMON_PATH" &
+
+    # Capture the PID of the last background process ($!)
+    NEW_PID=$!
+
+    # Create the PID file
+    echo "$NEW_PID" > "$PID_FILE"
+
+    echo "$DAEMON_NAME started"
+}
+
+# Main Case Statement
+case "$1" in
+    start)
+        start_daemon
+        ;;
+    stop)
+        stop_daemon
+        ;;
+    restart)
+        # 1. Stop the running process and delete the PID file
+        # Suppress output of stop_daemon to ensure clean 'restart' output
+        stop_daemon > /dev/null 2>&1
+
+        # 2. Start the process
+        start_daemon
+        echo "$DAEMON_NAME restarted"
+        ;;
+    *)
+        # Default usage message for any other or no argument
+        echo "Usage: $DAEMON_NAME {start|stop|restart}"
+        exit 1
+        ;;
+esac
+
+exit 0
